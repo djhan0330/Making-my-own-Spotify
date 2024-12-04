@@ -17,10 +17,10 @@ app.debug = True
 S3_BUCKET = 'dpv8cf-dp1-spotify'
 s3=boto3.client('s3')
 
-
-DBHOST = os.getenv('DBHOST')
 DBUSER = os.getenv('DBUSER')
+DBHOST = os.getenv('DBHOST')
 DBPASS = os.getenv('DBPASS')
+
 DB = "dpv8cf"
 
 app = FastAPI()
@@ -32,7 +32,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/")  # zone apex
+@app.get("/asd")  # zone apex
 def zone_apex():
     return {"Good Day": "Sunshine!"}
 
@@ -48,14 +48,16 @@ async def get_genres():
         json_data=[]
         for result in results:
             json_data.append(dict(zip(headers,result)))
-        cur.close()
+        # cur.close()
         db.close()
         return(json_data)
     except Error as e:
         print("MySQL Error: ", str(e))
-        cur.close()
+        # cur.close()
         db.close()
         return {"Error": "MySQL Error: " + str(e)}
+
+
 
 @app.get('/songs')
 async def get_genres():
